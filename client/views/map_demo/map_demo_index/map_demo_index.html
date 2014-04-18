@@ -1,0 +1,165 @@
+<template name="MapDemoIndex">
+  <div class="row">
+    <h2 class="text-center"><a href="https://github.com/vazco/meteor-vazco-maps/">Meteor VazcoMaps</a> - demo app..</h2>
+    <h3 class="text-center">
+      Short Documentation in <a href="https://github.com/vazco/meteor-vazco-maps/blob/master/README.md">README.md</a> file..
+    </h3>
+    <p class="text-center">
+      Based on : <a href="http://hpneo.github.io/gmaps/">http://hpneo.github.io/gmaps/</a> | <a href="http://hpneo.github.io/gmaps/documentation.html">gMaps.js documentation</a> | <a href="http://hpneo.github.io/gmaps/examples.html">gMaps.js examples</a> 
+    </p>
+    <p class="text-center">
+      VazcoMaps.init() can be used with standard Google Maps Api too
+    </p>
+    <p>&nbsp;</p>
+  </div>
+  <div class="map row">
+      <div class="col-md-4">{{> mapCanvas}}</div>
+      <div class="col-md-4">{{> mapCanvas2}}</div>
+      <div class="col-md-4">{{> mapCanvas3}}</div>
+  </div>
+</template>
+
+<template name="mapCanvas">
+    <div id="map-canvas" class="map-canvas"></div>
+    <form action="">
+        <input id="address" type="text">
+        <button type="submit">Search:</button>
+    </form>
+
+    <div>
+  <h5>Search input and marker drag and drop choose address</h5>
+      <pre>
+        <code>
+Template.mapCanvas.rendered = function () {
+
+var tmpl = this;
+var searchInput = this.$('#address');
+
+VazcoMaps.init({}, function() {
+
+  tmpl.mapEngine = VazcoMaps.gMaps();
+
+  tmpl.newMap = new tmpl.mapEngine({
+      div: '#map-canvas',
+      lat: 52.22968,
+      lng: 21.01223
+  });
+
+  tmpl.newMap.addMarker({
+    lat: 52.22968,
+    lng: 21.01223,
+    draggable: true,
+    dragend: function() {
+      var point = this.getPosition();
+      tmpl.mapEngine.geocode({location: point, callback: function(results) {
+        searchInput.val(results[0].formatted_address);
+        tmpl.newMap.setCenter(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+      }});
+    }
+  });
+});
+
+};  
+        </code>
+      </pre>
+    </div>
+</template>
+
+<template name="mapCanvas2">
+    <div id="map-canvas2" class="map-canvas"></div>
+<h5>Route:</h5>
+<pre>
+  <code>
+Template.mapCanvas2.rendered = function () {
+var tmpl = this;
+
+VazcoMaps.init({}, function() {
+
+  tmpl.mapEngine = VazcoMaps.gMaps();
+
+  tmpl.newMap2 = new tmpl.mapEngine({ 
+    div: '#map-canvas2',
+    lat: 51.10789,
+    lng: 17.03854,
+    zoom: 6
+  });
+
+  tmpl.newMap2.drawRoute({
+    origin: [51.10789, 17.03854],
+    destination: [52.22968, 21.01223],
+    travelMode: 'driving',
+    strokeColor: '#131540',
+    strokeOpacity: 0.6,
+    strokeWeight: 6
+  });
+
+});
+
+};
+  </code>
+</pre>
+</template>
+
+<template name="mapCanvas3">
+    <div id="map-canvas3" class="map-canvas"></div>
+<h5>Custom control button:</h5>
+<pre>
+  <code>
+Template.mapCanvas3.rendered = function () {
+var tmpl = this;
+
+VazcoMaps.init({}, function() {
+
+  tmpl.mapEngine = VazcoMaps.gMaps();
+
+  tmpl.newMap3 = new tmpl.mapEngine({ 
+      div: '#map-canvas3',
+      lat: -12.043333,
+      lng: -77.028333
+  });
+
+  tmpl.newMap3.addControl({
+    position: 'top_center',
+    content: 'Go to Wrocław!',
+    style: {
+      margin: '10px',
+      padding: '1px 6px',
+      fontSize: '16px',
+      border: 'solid 1px #717B87',
+      background: '#fff'
+    },
+    events: {
+      click: function(){
+        tmpl.mapEngine.geocode({
+          address: "Wrocław",
+          callback: function(results, status) {
+            tmpl.newMap3.removeMarkers();
+            if (status == 'OK') {
+              var latlng = results[0].geometry.location;
+              tmpl.newMap3.setCenter(latlng.lat(), latlng.lng());
+              tmpl.newMap3.addMarker({
+                lat: latlng.lat(),
+                lng: latlng.lng(),
+                draggable: true,
+                dragstart: function() {
+                  console.log('drag started');
+                },
+                dragend: function() {
+                  console.log('drag end')
+                }
+              });
+            } else {
+              console.log(status);
+            }
+          }
+        });
+      }
+    }
+  });
+
+});
+
+};
+  </code>
+</pre>
+</template>

@@ -1,30 +1,43 @@
 <template name="MapDemoIndex">
-  <div class="row">
-    <h2 class="text-center"><a href="https://github.com/vazco/meteor-vazco-maps/">Meteor VazcoMaps</a> - demo app..</h2>
-    <h3 class="text-center">
-      Short Documentation in <a href="https://github.com/vazco/meteor-vazco-maps/blob/master/README.md">README.md</a> file..
-    </h3>
-    <p class="text-center">
-      Based on : <a href="http://hpneo.github.io/gmaps/">http://hpneo.github.io/gmaps/</a> | <a href="http://hpneo.github.io/gmaps/documentation.html">gMaps.js documentation</a> | <a href="http://hpneo.github.io/gmaps/examples.html">gMaps.js examples</a> 
-    </p>
-    <p class="text-center">
-      VazcoMaps.init() can be used with standard Google Maps Api too
-    </p>
-    <p>&nbsp;</p>
-  </div>
-  <div class="map row">
-      <div class="col-md-4">{{> mapCanvas}}</div>
-      <div class="col-md-4">{{> mapCanvas2}}</div>
-      <div class="col-md-4">{{> mapCanvas3}}</div>
+  <div class="container">
+    <div class="row">
+      <h2 class="text-center"><a href="https://github.com/vazco/meteor-vazco-maps/">Meteor VazcoMaps</a> - demo app..</h2>
+      <h3 class="text-center">
+        Short Documentation in <a href="https://github.com/vazco/meteor-vazco-maps/blob/master/README.md">README.md</a> file..
+      </h3>
+      <p class="text-center">
+        Based on : <a href="http://hpneo.github.io/gmaps/">http://hpneo.github.io/gmaps/</a> | <a href="http://hpneo.github.io/gmaps/documentation.html">gMaps.js documentation</a> | <a href="http://hpneo.github.io/gmaps/examples.html">gMaps.js examples</a>
+      </p>
+      <p class="text-center">
+        VazcoMaps.init() can be used with standard Google Maps Api too
+      </p>
+      <p>&nbsp;</p>
+    </div>
+    <div class="map row">
+        <div class="col-md-12">{{> mapCanvas}}</div>
+        <div class="col-md-12">{{> mapCanvas2}}</div>
+        <div class="col-md-12">{{> mapCanvas3}}</div>
+    </div>
   </div>
 </template>
 
 <template name="mapCanvas">
-    <div id="map-canvas" class="map-canvas"></div>
+    <h1>Search example:</h1>
     <form action="">
-        <input id="address" type="text">
-        <button type="submit">Search:</button>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <input class="form-control" id="address" type="text">
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <button type="submit" class="btn btn-default btn-md">Search:</button>
+            </div>
+          </div>
+        </div>
     </form>
+    <div id="map-canvas" class="map-canvas"></div>
 
     <div>
   <h5>Search input and marker drag and drop choose address</h5>
@@ -59,13 +72,14 @@ VazcoMaps.init({}, function() {
   });
 });
 
-};  
+};
         </code>
       </pre>
     </div>
 </template>
 
 <template name="mapCanvas2">
+    <h1>Route example:</h1>
     <div id="map-canvas2" class="map-canvas"></div>
 <h5>Route:</h5>
 <pre>
@@ -77,7 +91,7 @@ VazcoMaps.init({}, function() {
 
   tmpl.mapEngine = VazcoMaps.gMaps();
 
-  tmpl.newMap2 = new tmpl.mapEngine({ 
+  tmpl.newMap2 = new tmpl.mapEngine({
     div: '#map-canvas2',
     lat: 51.10789,
     lng: 17.03854,
@@ -101,6 +115,7 @@ VazcoMaps.init({}, function() {
 </template>
 
 <template name="mapCanvas3">
+    <h1>Custom control button example:</h1>
     <div id="map-canvas3" class="map-canvas"></div>
 <h5>Custom control button:</h5>
 <pre>
@@ -112,7 +127,7 @@ VazcoMaps.init({}, function() {
 
   tmpl.mapEngine = VazcoMaps.gMaps();
 
-  tmpl.newMap3 = new tmpl.mapEngine({ 
+  tmpl.newMap3 = new tmpl.mapEngine({
       div: '#map-canvas3',
       lat: -12.043333,
       lng: -77.028333

@@ -1,5 +1,5 @@
 <h1 align="center">
-    <a href="https://github.com/vazco">vazco</a>/vazco/Vazco Maps Demo
+    <a href="https://github.com/vazco">vazco</a>/Vazco Maps Demo
 </h1>
 
 &nbsp;
